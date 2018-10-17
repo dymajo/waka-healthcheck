@@ -15,6 +15,7 @@ class Checks {
     const status = {}
     status.healthcheck = await this.healthcheck()
     status.lines = await this.lines()
+    status.stops = await this.stops()
 
     status.timetable = {}
     for (let i in config[this.region].modes) {
@@ -41,9 +42,29 @@ class Checks {
     } catch (err) {
       return ERROR(`${response.status} - Invalid JSON`)
     }
+    console.log(`${Object.keys(json.lines).length} lines found.`)
     return Object.keys(json.lines).length > 0 && json.groups.length > 0
       ? HEALTHY
       : ERROR('0 lines found.')
+  }
+
+  async stops() {
+    const lat = config[this.region].stops.lat
+    const lon = config[this.region].stops.lon
+    const url = `${
+      this.endpoint
+    }/station/search?lat=${lat}&lon=${lon}&distance=200`
+    console.log('Fetching', url)
+
+    const response = await fetch(url)
+    let json
+    try {
+      json = await response.json()
+    } catch (err) {
+      return ERROR(`${response.status} - Invalid JSON`)
+    }
+    console.log(`${json.length} stops found.`)
+    return json.length > 0 ? HEALTHY : ERROR('0 stops found.')
   }
 
   async offlineTimetable(mode) {

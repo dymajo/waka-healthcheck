@@ -1,5 +1,9 @@
 module.exports = {
   modes: ['train', 'bus', 'cablecar', 'ferry'],
+  stops: {
+    lat: -41.278969,
+    lon: 174.780562,
+  },
   trainTimetable: [
     {
       line: 'HVL',

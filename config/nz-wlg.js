@@ -1,5 +1,5 @@
 module.exports = {
-  modes: ['train', 'bus'],
+  modes: ['train', 'bus', 'cablecar', 'ferry'],
   trainTimetable: [
     {
       line: 'HVL',
@@ -34,6 +34,26 @@ module.exports = {
     {
       line: '2',
       stop: '5012',
+    },
+  ],
+  cablecarTimetable: [
+    {
+      line: 'CCL',
+      stop: 'LAMB',
+    },
+    {
+      line: 'CCL',
+      stop: 'KELB',
+    },
+  ],
+  ferryTimetable: [
+    {
+      line: 'WHF',
+      stop: '9997',
+    },
+    {
+      line: 'WHF',
+      stop: '9999',
     },
   ],
 }

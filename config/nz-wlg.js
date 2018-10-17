@@ -1,4 +1,5 @@
 module.exports = {
+  name: 'Te Whanganui-a-Tara',
   modes: ['train', 'bus', 'cablecar', 'ferry'],
   stops: {
     lat: -41.278969,

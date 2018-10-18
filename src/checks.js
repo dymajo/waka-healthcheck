@@ -13,6 +13,7 @@ class Checks {
   async runAll() {
     console.log('Runnning all checks in', this.region)
     const status = {}
+    status.date = new Date()
     status.healthcheck = await this.healthcheck()
     status.lines = await this.lines()
     status.stops = await this.stops()

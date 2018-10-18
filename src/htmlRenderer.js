@@ -4,10 +4,12 @@ class HTMLRender {
   static render(json, level = 2) {
     let output = []
     Object.keys(json).forEach(key => {
-      const value =
-        typeof json[key] === 'object'
-          ? HTMLRender.render(json[key], level + 1)
-          : json[key]
+      let value = json[key]
+      if (json[key].constructor === Date) {
+        value = `<time>${json[key]}</time>`
+      } else if (typeof json[key] === 'object') {
+        value = HTMLRender.render(json[key], level + 1)
+      }
       const str = `<h${level}>
         <span class="key">${key}</span>:
         <span class="value">${value}</span>
@@ -35,9 +37,11 @@ h3, h4, h5, h6 {
 
   static makePage(prefix, html) {
     return `
-      <h1>${[prefix, config[prefix].name].join(' - ')}</h1>
-      ${HTMLRender.getCSS()}
-      ${html}
+      <div>
+        <h1>${[prefix, config[prefix].name].join(' - ')}</h1>
+        ${HTMLRender.getCSS()}
+        ${html}
+      </div>
     `
   }
 }

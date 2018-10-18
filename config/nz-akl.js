@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Tāmaki Makaurau',
+  name: 'Tamaki Makaurau',
   modes: ['train', 'bus', 'ferry'],
   stops: {
     lat: -36.84429,

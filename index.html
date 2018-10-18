@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Waka Status</title>
+</head>
+<body>
+  <style>
+    body { font-family: sans-serif; }
+  </style>
+  <h1 style="font-weight: bold">Waka Status</h1>
+  <script>
+    const getData = async (region) => {
+      try {
+        const res = await fetch(`/status/${region}.html`)
+        const data = await res.text()
+        document.body.innerHTML += data
+        document.querySelectorAll('time').forEach(i => {
+          i.innerText = new Date(i.innerText).toString()
+        })
+      } catch(err) {
+        document.body.innerHTML += `<p>Error. <a href="/status/${region}.html">Click here.</a></p>`
+      }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      getData('nz-akl')
+      getData('nz-wlg')
+    })
+  </script>
+</body>
+</html>

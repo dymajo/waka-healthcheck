@@ -17,6 +17,7 @@ class Checks {
     status.healthcheck = await this.healthcheck()
     status.lines = await this.lines()
     status.stops = await this.stops()
+    status.realtime = await this.realtime()
 
     status.timetable = {}
     for (let i in config[this.region].modes) {
@@ -106,6 +107,31 @@ class Checks {
     } else {
       return WARN(`${failures}/${checks.length} checks failed.`)
     }
+  }
+  
+  async realtime() {
+    const url = `${this.endpoint}/realtime-healthcheck`
+    console.log('Fetching', url)
+    const response = await fetch(url)
+    if (response.status === 400) {
+      return ERROR("Realtime not available.")
+    }
+    let json
+    try {
+      json = await response.json()
+    } catch (err) {
+      return ERROR(`${response.status} - Invalid JSON`)
+    }
+    if (json.lastUpdate === null) {
+      console.log('This endpoint pulls realtime data in realtime.')
+      return HEALTHY
+    }
+    console.log(`Realtime Last Pulled at ${json.lastUpdate}.`)
+
+    // If it hasn't updated in the last 5 minutes, something is bad
+    return (new Date() - new Date(json.lastUpdate)) < 300000
+      ? HEALTHY
+      : ERROR(`Last Update at ${json.lastUpdate}.`)
   }
 }
 module.exports = Checks

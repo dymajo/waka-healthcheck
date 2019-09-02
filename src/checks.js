@@ -122,16 +122,16 @@ class Checks {
     } catch (err) {
       return ERROR(`${response.status} - Invalid JSON`)
     }
-    if (json.lastUpdate === null) {
+    if (json.lastTripUpdate === null) {
       console.log('This endpoint pulls realtime data in realtime.')
       return HEALTHY
     }
-    console.log(`Realtime Last Pulled at ${json.lastUpdate}.`)
+    console.log(`Realtime Last Pulled at ${json.lastTripUpdate}.`)
 
     // If it hasn't updated in the last 5 minutes, something is bad
-    return (new Date() - new Date(json.lastUpdate)) < 300000
+    return (new Date() - new Date(json.lastTripUpdate)) < 300000
       ? HEALTHY
-      : ERROR(`Last Update at ${json.lastUpdate}.`)
+      : ERROR(`Last Update at ${json.lastTripUpdate}.`)
   }
 }
 module.exports = Checks

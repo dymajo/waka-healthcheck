@@ -26,7 +26,7 @@ module.exports = {
   busTimetable: [
     {
       line: 'NX1',
-      stop: '7071',
+      stop: '4065',
     },
     {
       line: 'INN',
@@ -51,12 +51,12 @@ module.exports = {
       stop: '9670',
     },
     {
-      line: 'BIRK',
-      stop: '9660',
+      line: 'HMB',
+      stop: '9600',
     },
     {
-      line: 'BIRK',
-      stop: '9600',
+      line: 'HMB',
+      stop: '9700',
     },
   ],
 }
